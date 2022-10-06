@@ -41,7 +41,42 @@ def text_transform():
 
 
 
-def update_page();
+def update_page_simple();
+
+
+def homepage_reader():
+
+    scraped_data = {}
+
+    url = 'https://www.news.com.au/'
+    response = requests.get(url)
+    soup = bs(response.text, 'html.parser')
+
+    titles = soup.find_all('h4', class_="storyblock_title")
+    title_li = []
+    for title in titles:
+        title_li.append(title.text)
+
+    articles = soup.find_all('p', class_='storyblock_standfirst g_font-body-s')
+    article_li = []
+    for article in articles:
+        article_li.append(article.text)
+
+    scraped_data = pd.DataFrame(list(zip(title_li, article_li)))
+
+    scraped_data.columns = ['title','text']
+
+    X = text_transform(scraped_data)
+    prediction = loaded_model(X)
+
+    update_page_complex(prediction)
+    
+
+def update_page_complex():
+
+
+
+
 
 
 
