@@ -11,9 +11,7 @@ loaded_model = pickle.load(open(filename, 'rb'))
 
 def article_reader(input):
     
-    scraped_data = {}
-    
-    url = "https://www.news.com.au/lifestyle/food/restaurants-bars/my-heart-aches-iconic-melbourne-cbd-venues-bar-americano-and-pentolina-to-close/news-story/3058ae72173263c24e01ad87f140029a"
+    url = input
     response = requests.get(url)
     soup = bs(response.text, 'html.parser')
 
@@ -24,29 +22,19 @@ def article_reader(input):
     for article in articles:
         article_text += article.text
 
-    scraped_data['title'] = title
-    scraped_data['article'] = article_text
-
     X = text_transform(scraped_data)
     prediction = loaded_model.predict(X)
 
-    update_page(prediction)
+    scraped_data = {
+        'title' : title,
+        'text' : article_text,
+        'prediction' : prediction 
+    }
 
-
-
-def text_transform():
-
-
-    return X
-
-
-
-def update_page_simple();
+    return scraped_data
 
 
 def homepage_reader():
-
-    scraped_data = {}
 
     url = 'https://www.news.com.au/'
     response = requests.get(url)
@@ -67,12 +55,31 @@ def homepage_reader():
     scraped_data.columns = ['title','text']
 
     X = text_transform(scraped_data)
-    prediction = loaded_model(X)
 
-    update_page_complex(prediction)
-    
+    prediction_arr = []
+    for x in X:
+        prediction = loaded_model.predict(x)
+        prediction_arr(prediction)
 
-def update_page_complex():
+    X_filtered = filter(lambda x: x == 0, prediction_arr)
+    X_filtered = list(X_filtered)
+    trustworthy_percent = (len(X_filtered)/len(X)) * 100
+
+    scraped_data = {
+        'title' : title_li,
+        'text' : article_li,
+        'trustworthy_percent' : trustworthy_percent 
+    }
+
+    return scraped_data
+
+
+
+def text_transform_homepage():
+
+
+    return X
+
 
 
 
