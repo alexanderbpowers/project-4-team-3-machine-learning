@@ -4,6 +4,11 @@ from splinter import Browser
 from webdriver_manager.chrome import ChromeDriverManager 
 import pymongo
 import pyreadstat
+import pickle
+
+
+filename = 'nlp_logistical_regression_model.sav'
+loaded_model = pickle.load(open(filename, 'rb'))
 
 def article_reader(input):
     
@@ -28,13 +33,22 @@ def article_reader(input):
 
     browser.quit()
 
-    model = pyreadstat.read_sav('file_path')
+    X = text_transform(scraped_data)
+    prediction = loaded_model.predict(X)
 
-    
-    
+    update_page(X)
 
-    return scraped_data
 
-scraper()
+
+
+
+def text_transform():
+
+
+    return X
+
+def update_page();
+
+
 
 
