@@ -52,8 +52,8 @@
                   <p><a class="btn btn-secondary" href="#" role="button" onclick="article_reader(this.value)">Analyse! &raquo;</a></p>
                 </div>
                 <div class="col-md-8">
-                  <h2>Article Title {{% for title in news_data.title %}} </h2>
-                  <p> Article Body Text {{% for article in news_data.article %}} </p>
+                  <h2 id="article-heading-id">Article Title {{% for title in news_data.title %}} </h2>
+                  <p id="article-body-id"> Article Body Text {{% for article in news_data.article %}} </p>
                 </div>
             </div>
         </div>
@@ -63,6 +63,10 @@
     <footer class="container">
         <p>&copy; Team 3 - 1 2 3 4 5 6</p>
     </footer>
+
+    <!-- custom JS -->
+    <script src="static/index.js"></script>
+
 </body>
 
 </html>
