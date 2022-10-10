@@ -4,13 +4,31 @@ from splinter import Browser
 from webdriver_manager.chrome import ChromeDriverManager 
 import pickle
 import requests
-
+import re
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 filename = 'nlp_logistical_regression_model.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 
+port_stem = PorterStemmer()
+
+###########
+
+def stemming(content):
+
+    stemmed_content = re.sub('[^a-zA-Z]',' ',content)
+    stemmed_content = stemmed_content.lower()
+    stemmed_content = stemmed_content.split()
+    stemmed_content = [port_stem.stem(word) for word in stemmed_content if not word in stopwords.words('english')]
+    stemmed_content = ' '.join(stemmed_content)
+    return stemmed_content
+
+###########
+
 def article_reader(input):
-   # 
+   
     url = input
     response = requests.get(url)
     soup = bs(response.text, 'html.parser')
@@ -22,17 +40,18 @@ def article_reader(input):
     for article in articles:
         article_text += article.text
 
-    X = text_transform(scraped_data)
-    prediction = loaded_model.predict(X)
-
     scraped_data = {
         'title' : title,
         'text' : article_text,
         'prediction' : prediction 
     }
 
-    return scraped_data
+    X = text_transform(scraped_data)
+    prediction = loaded_model.predict(X)
 
+    return scraped_data
+    
+###############
 
 def homepage_reader():
 
@@ -73,12 +92,18 @@ def homepage_reader():
 
     return scraped_data
 
+###################
 
+def text_transform(data):
 
-def text_transform_homepage():
+    input_data = pd.DataFrame.from_dict(data)
+    input_data['text'] = input_data['text'].apply(stemming)
+    X = input_data['text'].values
+    vectorizer = TfidfVectorizer()
+    vectorizer.fit(X)
+    X = vectorizer.transform(X)
 
-
-    return X
+    return X 
 
 
 
