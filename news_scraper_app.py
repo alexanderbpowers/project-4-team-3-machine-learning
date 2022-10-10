@@ -10,7 +10,7 @@ filename = 'nlp_logistical_regression_model.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 
 def article_reader(input):
-    
+   # 
     url = input
     response = requests.get(url)
     soup = bs(response.text, 'html.parser')
