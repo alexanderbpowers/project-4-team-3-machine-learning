@@ -43,11 +43,14 @@ def article_reader(input):
     scraped_data = {
         'title' : title,
         'text' : article_text,
-        'prediction' : prediction 
     }
 
     X = text_transform(scraped_data)
     prediction = loaded_model.predict(X)
+    
+    scraped_data = {
+        'prediction' : prediction 
+    }
 
     return scraped_data
     
