@@ -8,10 +8,12 @@ import re
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from sklearn.feature_extraction.text import TfidfVectorizer
+import pickle
 
-filename = 'nlp_logistical_regression_model.sav'
-loaded_model = pickle.load(open(filename, 'rb'))
+with open('ben_test.pickle', 'rb') as picklefile:
+    saved_pipe = pickle.load(picklefile)
 
+# nltk.download('stopwords')
 port_stem = PorterStemmer()
 
 ###########
@@ -45,8 +47,8 @@ def article_reader(input):
         'text' : article_text,
     }
 
-    X = text_transform(scraped_data)
-    prediction = loaded_model.predict(X)
+    X = article_text_transform(scraped_data)
+    prediction = saved_pipe.predict(X)
     
     scraped_data = {
         'prediction' : prediction 
@@ -72,15 +74,14 @@ def homepage_reader():
     for article in articles:
         article_li.append(article.text)
 
-    scraped_data = pd.DataFrame(list(zip(title_li, article_li)))
+    df = pd.DataFrame(list(zip(title_li, article_li)))
+    df.columns = ['title','text']
 
-    scraped_data.columns = ['title','text']
-
-    X = text_transform(scraped_data)
+    X = homepage_text_transform(df)
 
     prediction_arr = []
     for x in X:
-        prediction = loaded_model.predict(x)
+        prediction = saved_pipe.predict(x)
         prediction_arr(prediction)
 
     X_filtered = filter(lambda x: x == 0, prediction_arr)
@@ -97,16 +98,25 @@ def homepage_reader():
 
 ###################
 
-def text_transform(data):
+def article_text_transform(data):
 
     input_data = pd.DataFrame.from_dict(data)
-    input_data['text'] = input_data['text'].apply(stemming)
-    X = input_data['text'].values
-    vectorizer = TfidfVectorizer()
-    vectorizer.fit(X)
-    X = vectorizer.transform(X)
+    input_data = data['title'].str.lower()
+    input_data = input_data.apply(stemming)
+    X = input_data.values
 
     return X 
+
+def homepage_text_transform(data):
+
+    X = []
+    input_data = data['title'].str.lower()
+    input_data = input_data.apply(stemming)
+    X = input_data.values
+
+    return X
+    
+    
 
 
 
