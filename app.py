@@ -28,29 +28,27 @@ def exampleScrape(testParameter):
     return testParameter
 
 # web scrapper -  ARTICLES
-@app.route("/api/ArticleScrape/<input>")
+@app.route("/api/ArticleScrape/<path:input>")
 def article_reader(input):
 
-    text = request.form['articleURLInput']
+    #variables
+    url = input
+    response = requests.get(url)
+    soup = bs(response.text, 'html.parser')
 
-   # variables
-    # url = input
-    # response = requests.get(url)
-    # soup = bs(response.text, 'html.parser')
+    title = soup.title.text.strip()
 
-    # title = soup.title.text.strip()
+    articles = soup.body.find_all('p')
+    article_text = ""
+    for article in articles:
+        article_text += article.text
 
-    # articles = soup.body.find_all('p')
-    # article_text = ""
-    # for article in articles:
-    #     article_text += article.text
+    scraped_data = {
+        'title' : title,
+        'text' : article_text,
+    }
 
-    # scraped_data = {
-    #     'title' : title,
-    #     'text' : article_text,
-    # }
-
-    return text
+    return scraped_data
 
 if __name__ == '__main__':
     app.run(debug=True)
