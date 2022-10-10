@@ -1,11 +1,10 @@
 from flask import Flask, render_template, redirect, request
-# from flask_pymongo import PyMongo
-# import news_scraper_app
-# # import pymongo
+from bs4 import BeautifulSoup as bs
+import pandas as pd
+from splinter import Browser
+import requests
 
 app = Flask(__name__)
-# app.config["MONGO_URI"] = "mongodb://localhost:27017/news_ddb"
-# mongo = PyMongo(app)
 
 #--------------------------------------
 # Flask Routes (website URL's)
@@ -23,17 +22,35 @@ def about():
 # Flask API CALLS (javascript calling python code)
 #--------------------------------------
 
-# data for number of establishment 
+# test
 @app.route("/api/exampleScrape")
 def exampleScrape(testParameter):
     return testParameter
 
+# web scrapper -  ARTICLES
+@app.route("/api/ArticleScrape/<input>")
+def article_reader(input):
 
-# @app.route("/scrape")
-# def scrape():
-#     scraped_data = news_scraper_app.scraper()
-#     mongo.db.news_db.replace_one({}, scraped_data, upsert=True)
-#     return redirect("/", code=302)
+    text = request.form['articleURLInput']
+
+   # variables
+    # url = input
+    # response = requests.get(url)
+    # soup = bs(response.text, 'html.parser')
+
+    # title = soup.title.text.strip()
+
+    # articles = soup.body.find_all('p')
+    # article_text = ""
+    # for article in articles:
+    #     article_text += article.text
+
+    # scraped_data = {
+    #     'title' : title,
+    #     'text' : article_text,
+    # }
+
+    return text
 
 if __name__ == '__main__':
     app.run(debug=True)

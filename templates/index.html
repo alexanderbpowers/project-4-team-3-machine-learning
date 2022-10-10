@@ -49,8 +49,10 @@
                   <!-- article analyser -->
                   <h2>Article Analyser</h2>
                   <p>Please enter in the URL of the Article:</p>
-                  <input class="form-control mr-sm-2" id="urlTextbox" type="text" placeholder="ARTICLE URL" aria-label="ARTICLE-URL">
-                  <p><a class="btn btn-secondary" href="#" role="button" onclick="analyse_click()">Analyse! &raquo;</a></p>
+                  <form method="POST">
+                    <input class="form-control mr-sm-2" id="urlTextbox" type="text" name="articleURLInput" placeholder="ARTICLE URL" aria-label="ARTICLE-URL">
+                    <p><a class="btn btn-secondary" href="#" role="button" onclick="analyse_click()">Analyse! &raquo;</a></p>
+                  </form>
                 </div>
                 <div class="col-md-4">
                   <!-- article info -->
