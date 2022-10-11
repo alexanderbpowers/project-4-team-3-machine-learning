@@ -85,6 +85,7 @@ def ArticleAnalysis(input):
     soup = bs(response.text, 'html.parser')
 
     title = soup.title.text.strip()
+    title = title.split("|")[0]
 
     articles = soup.body.find_all('p')
     article_text = ""
