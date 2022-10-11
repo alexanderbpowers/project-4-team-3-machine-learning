@@ -92,6 +92,9 @@ def ArticleAnalysis(input):
     for article in articles:
         article_text += article.text
 
+    # CNN author
+    # authour = soup.find('span', class_='byline__name')
+    # authour = authour.text.strip()
 
     # ML MODEL
     with open('models/ben_test.pickle', 'rb') as picklefile:
@@ -108,6 +111,47 @@ def ArticleAnalysis(input):
     result = saved_pipe.predict(X)
     result=str(result[0])
     
+    return result
+
+
+    # web scrapper -  CNN
+@app.route("/api/ArticleAnalysis2/<path:input>")
+def ArticleAnalysis2(input):
+
+    #variables
+    url = input
+    response = requests.get(url)
+    soup = bs(response.text, 'html.parser')
+
+    title = soup.title.text.strip()
+    title = title.split("|")[0]
+
+    articles = soup.body.find_all('p')
+    article_text = ""
+    for article in articles:
+        article_text += article.text
+
+    # CNN author
+    authour = soup.find('span', class_='byline__name')
+    authour = authour.text.strip()
+
+    # ML MODEL
+    with open('models/ben_test.pickle', 'rb') as picklefile:
+        saved_pipe = pickle.load(picklefile)
+
+    # ML MODEL DATA PROCESSING
+    data = {'title': [title],
+    'text':[authour],}
+    input_data = pd.DataFrame.from_dict(data)
+    content = input_data['text']+''+input_data['title']
+    content=content.str.lower()
+    content = content.apply(stemming)
+    X = content.values
+    result = saved_pipe.predict(X)
+    result=str(result[0])
+    
+    xx = str(content.values)
+
     return result
 
 if __name__ == '__main__':
