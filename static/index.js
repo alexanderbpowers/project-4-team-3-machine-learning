@@ -6,16 +6,14 @@ function random_result(urlInput) {
     // calling the flask scrapping API
     d3.json("/api/ArticleAnalysis/" + urlInput).then(function (data) {
 
-        alert(data)
-
         if(data == 1){
-            resultsTitle.innerHTML = 'Not Trustworthy';
+            resultsTitle.innerHTML = 'Not Reliable';
             resultsText.innerHTML = data;
     
             resultsTitle.style.color = 'red';
             resultsText.style.color = 'red';
         }else{
-            resultsTitle.innerHTML = 'Trustworthy';
+            resultsTitle.innerHTML = 'Reliable';
             resultsText.innerHTML = data;
     
             resultsTitle.style.color = 'green';
