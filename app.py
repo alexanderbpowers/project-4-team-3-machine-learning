@@ -132,16 +132,23 @@ def ArticleAnalysis2(input):
         article_text += article.text
 
     # CNN author
-    authour = soup.find('span', class_='byline__name')
-    authour = authour.text.strip()
+    
+    if soup.find('span', class_='byline__name') != '':
+        author = soup.find('span', class_='byline__name')
+        author = author.text.strip()
+    else:
+        author = ''
+    
+    # news.com.au author
+    # author = soup.find('span', class_='g_font-body-m')
 
     # ML MODEL
-    with open('models/ben_test.pickle', 'rb') as picklefile:
+    with open('models/ben_test_SVC.pickle', 'rb') as picklefile:
         saved_pipe = pickle.load(picklefile)
 
     # ML MODEL DATA PROCESSING
     data = {'title': [title],
-    'text':[authour],}
+    'text':[author],}
     input_data = pd.DataFrame.from_dict(data)
     content = input_data['text']+''+input_data['title']
     content=content.str.lower()
