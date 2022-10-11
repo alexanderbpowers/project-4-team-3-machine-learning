@@ -1,25 +1,27 @@
-function random_result() {
+function random_result(urlInput) {
     // for demo purposes
     var resultsTitle = document.getElementById('resultTitle');
     var resultsText = document.getElementById('resultText');
-
-    x = Math.random();
-    if(x < 0.5){
-        resultsTitle.innerHTML = ' result less than .5';
-        resultsText.innerHTML = 'RED';
-
-        resultsTitle.style.color = 'red';
-        resultsText.style.color = 'red';
-    }else{
-        resultsTitle.innerHTML = ' result greater than .5';
-        resultsText.innerHTML = 'BLUE';
-
-        resultsTitle.style.color = 'green';
-        resultsText.style.color = 'green';
-    };
-
     
+    // calling the flask scrapping API
+    d3.json("/api/ArticleAnalysis/" + urlInput).then(function (data) {
 
+        alert(data)
+
+        if(data == 1){
+            resultsTitle.innerHTML = 'Not Trustworthy';
+            resultsText.innerHTML = data;
+    
+            resultsTitle.style.color = 'red';
+            resultsText.style.color = 'red';
+        }else{
+            resultsTitle.innerHTML = 'Trustworthy';
+            resultsText.innerHTML = data;
+    
+            resultsTitle.style.color = 'green';
+            resultsText.style.color = 'green';
+        };
+    });
 
 }
 
@@ -54,7 +56,7 @@ function analyse_click() {
     // article_body_text.innerHTML = analyse_textbox_value;
 
     // calling a random result for testing
-    random_result();
+    random_result(analyse_textbox_value);
     // pass URL into the function that calls scrapping API
     urlPasser(analyse_textbox_value);
 
