@@ -52,6 +52,7 @@ def exampleScrape(testParameter):
     return testParameter
 
 # web scrapper -  ARTICLES
+# This only returns the scrapped article and headline 
 @app.route("/api/ArticleScrape/<path:input>")
 def article_reader(input):
 
@@ -75,7 +76,7 @@ def article_reader(input):
     return scraped_data
 
 
-    # web scrapper -  2222
+    # web scrapper -  general article scraper and returns result
 @app.route("/api/ArticleAnalysis/<path:input>")
 def ArticleAnalysis(input):
 
@@ -114,7 +115,7 @@ def ArticleAnalysis(input):
     return result
 
 
-    # web scrapper -  CNN
+    # web scrapper -  CNN article only
 @app.route("/api/ArticleAnalysis2/<path:input>")
 def ArticleAnalysis2(input):
 
