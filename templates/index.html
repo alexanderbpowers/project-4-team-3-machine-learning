@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Scraped News Data</title>
+    <link rel="stylesheet" href="../static/jumbotron.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <!-- NAV BAR -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/">News</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about">About</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+    <main role="main">
+
+        <!-- Title banner -->
+        <div class="jumbotron">
+            <div class="container">
+            <h1 class="display-3">News Reliability Checker</h1>
+            <p>We have finely tuned a Machine algorithm to accurately classify news a news article as either Trustworthy or Untrustworthy</p>
+            <p><a class="btn btn-primary btn-lg" href="about" role="button">Learn more &raquo;</a></p>
+            </div>
+        </div>
+
+        <!-- Scrape button & output -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                  <!-- article analyser -->
+                  <h2>Article Analyser</h2>
+                  <p>Please enter in the URL of the Article:</p>
+                  <form method="POST">
+                    <input class="form-control mr-sm-2" id="urlTextbox" type="text" name="articleURLInput" placeholder="ARTICLE URL" aria-label="ARTICLE-URL">
+                    <p><a class="btn btn-secondary" href="#" role="button" onclick="analyse_click()">Analyse! &raquo;</a></p>
+                  </form>
+                </div>
+                <div class="col-md-4">
+                  <!-- article info -->
+                  <h2 id="article-heading-id">Article Title </h2>
+                  <p id="article-body-id"> Article Body Text </p>
+                </div>
+                <div class="col-md-4">
+                  <!-- results -->
+                  <h2 id="resultTitle"> Results Title </h2>
+                  <p id="resultText"> Results Text </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <hr>
+    <footer class="container">
+        <p>&copy; Team 3 - Alexander Powers, Andrew King, Benjamin Verblun, Denise Okur, Paul Wang, Sam Vuong</p>
+    </footer>
+
+    <!-- custom JS -->
+    <script src="../static/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+
+</body>
+
+</html>
