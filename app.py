@@ -132,33 +132,25 @@ def ArticleAnalysis2(input):
     for article in articles:
         article_text += article.text
 
-    # CNN author
-    
-    if soup.find('span', class_='byline__name') != '':
-        author = soup.find('span', class_='byline__name')
-        author = author.text.strip()
-    else:
-        author = ''
-    
-    # news.com.au author
-    # author = soup.find('span', class_='g_font-body-m')
+    #  author
+    # if soup.find('span', class_='byline__name') != '':
+    #     author = soup.find('span', class_='byline__name')
+    #     author = author.text.strip()
+    # else:
+    #     author = ''
 
     # ML MODEL
-    with open('models/ben_test_SVC.pickle', 'rb') as picklefile:
+    with open('models/naive_bayes_ben__headline_body.pickle', 'rb') as picklefile:
         saved_pipe = pickle.load(picklefile)
 
     # ML MODEL DATA PROCESSING
     data = {'title': [title],
-    'text':[author],}
+    'text':[article_text],}
     input_data = pd.DataFrame.from_dict(data)
-    content = input_data['text']+''+input_data['title']
-    content=content.str.lower()
-    content = content.apply(stemming)
+    content = input_data['title']+''+input_data['text']
     X = content.values
     result = saved_pipe.predict(X)
     result=str(result[0])
-    
-    xx = str(content.values)
 
     return result
 

@@ -1,13 +1,13 @@
-function random_result(urlInput) {
+function analysisResult(urlInput) {
     // for demo purposes
     var resultsTitle = document.getElementById('resultTitle');
     var resultsText = document.getElementById('resultText');
     
     // calling the flask scrapping API
-    d3.json("/api/ArticleAnalysis/" + urlInput).then(function (data) {
+    d3.json("/api/ArticleAnalysis2/" + urlInput).then(function (data) {
 
         if(data == 1){
-            resultsTitle.innerHTML = 'Not Reliable';
+            resultsTitle.innerHTML = 'Potentially Not Reliable';
             resultsText.innerHTML = data;
     
             resultsTitle.style.color = 'red';
@@ -50,13 +50,10 @@ function analyse_click() {
     var article_heading_text = document.getElementById('article-heading-id');
     var article_body_text = document.getElementById('article-body-id');
 
-    // article_heading_text.innerHTML = 'Test heading';
-    // article_body_text.innerHTML = analyse_textbox_value;
-
-    // calling a random result for testing
-    random_result(analyse_textbox_value);
-    // pass URL into the function that calls scrapping API
-    urlPasser(analyse_textbox_value);
+   // pass URL into the function that calls scrapping API
+   urlPasser(analyse_textbox_value);
+    // calling a  result  
+    analysisResult(analyse_textbox_value);
 
 
   }
