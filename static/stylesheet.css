@@ -1,0 +1,33 @@
+* {
+    font-family: Georgia;
+}
+
+#nav {
+    background-color: rgb(243, 229, 126);
+}
+
+.navbar-brand {
+    color: rgb(58, 58, 58);
+}
+
+.nav-link {
+    color: rgb(58, 58, 58);
+}
+
+#titlebanner {
+    background-color: rgb(252, 249, 242);
+}
+
+#learnbtn {
+    background-color: rgb(100, 118, 200);
+    border-color: rgb(100, 118, 200);
+}
+
+.btn.btn-secondary {
+    background-color: rgb(100, 118, 200);
+    border-color: rgb(100, 118, 200);
+}
+
+footer {
+    text-align: center;
+}
